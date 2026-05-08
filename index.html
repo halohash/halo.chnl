@@ -142,14 +142,16 @@ nav: true
 
     <ul>
       {% for page in site.html_pages %}
-        <li>
-          <a href=".{{ page.url }}">
-            {% if page.chnlicon %}
-              <img src="{{ page.chnlicon }}" alt="icon">
-            {% endif %}
-            {{ page.abtitle | default: page.url }}
-          </a>
-        </li>
+        {% unless page.url == "/" %}
+          <li>
+            <a href=".{{ page.url }}">
+              {% if page.chnlicon %}
+                <img src="{{ page.chnlicon }}" alt="icon">
+              {% endif %}
+              {{ page.abtitle | default: page.url }}
+            </a>
+          </li>
+        {% endunless %}
       {% endfor %}
     </ul>
   </div>

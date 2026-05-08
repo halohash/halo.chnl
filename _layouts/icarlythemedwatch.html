@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="webchnl">
+    <meta name="apple-mobile-web-app-title" content="hashchnl">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
     <title>{{ page.abtitle }} | {{ site.watchtitle }}</title>
@@ -13,9 +13,9 @@
     <meta property="og:description" content="Watch {{ page.abtitle }} on {{ site.watchtitle }}" />
     <meta property="og:url" content="/watch/index.php?slug={{ page.abtitle }}" />
     <meta property="og:image" content="{{ page.chnlicon }}" />
-    <meta name="og:site_name" content="webchnl">
+    <meta name="og:site_name" content="hashchnl">
 
-    <meta name="twitter:site" content="@webchnl">
+    <meta name="twitter:site" content="@hashchnl">
 
     <meta name="theme-color" content="#ff3cac" />
 
@@ -128,6 +128,70 @@
             background: rgba(20, 10, 45, 0.9) !important;
         }
 
+        .news-wrap {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .news-label {
+            flex-shrink: 0;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background:
+                linear-gradient(135deg, #ffe14d, #ff8a00);
+            color: #2b003f;
+            box-shadow:
+                0 0 18px rgba(255,225,77,0.6),
+                inset 0 0 10px rgba(255,255,255,0.45);
+        }
+
+        .news-crawl {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 54px;
+            border-radius: 20px;
+            border: 3px solid rgba(255,255,255,0.2);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,60,172,0.25),
+                    rgba(125,92,255,0.25)
+                );
+            backdrop-filter: blur(12px);
+            box-shadow:
+                0 0 22px rgba(255,60,172,0.25),
+                0 0 30px rgba(125,92,255,0.18);
+        }
+
+        .news-track {
+            position: absolute;
+            white-space: nowrap;
+            line-height: 54px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: white;
+            text-shadow:
+                0 0 8px rgba(255,255,255,0.6),
+                0 0 18px rgba(255,60,172,0.8);
+            padding-left: 100%;
+            animation: crawl 18s linear infinite;
+        }
+
+        @keyframes crawl {
+            from {
+                transform: translateX(0%);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
         .info {
             margin-top: 24px;
             padding: 24px;
@@ -141,6 +205,7 @@
             box-shadow:
                 0 0 30px rgba(125,92,255,0.22),
                 0 0 20px rgba(255,60,172,0.18);
+            position: relative;
         }
 
         #about-title {
@@ -181,6 +246,24 @@
             .info {
                 border-radius: 22px;
             }
+
+            .news-wrap {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .news-label {
+                text-align: center;
+            }
+
+            .news-crawl {
+                height: 48px;
+            }
+
+            .news-track {
+                line-height: 48px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -219,6 +302,16 @@
                     To view this video please enable JavaScript and use a modern browser.
                 </p>
             </video>
+        </div>
+
+        <div class="news-wrap">
+            <div class="news-label">NEWS FLASH</div>
+
+            <div class="news-crawl">
+                <div class="news-track">
+                    {{ page.news | default: "WELCOME TO HASHCHNL ★ ICARLY STYLE NEWS TICKER ★ SPENCER EATS 40 TACOS ★ RANDOM DANCING LOBSTERS SPOTTED ★" }}
+                </div>
+            </div>
         </div>
 
         <div class="info">
