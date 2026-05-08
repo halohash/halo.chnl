@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HALOCHNL">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <title>{{ page.abtitle }} | {{ site.watchtitle }}</title>
+
+    <meta property="og:title" content="{{ page.abtitle }} | {{ site.watchtitle }}" />
+    <meta property="og:description" content="Watch {{ page.abtitle }} on {{ site.watchtitle }}" />
+    <meta property="og:url" content="/watch/index.php?slug={{ page.abtitle }}" />
+    <meta property="og:image" content="{{ page.chnlicon }}" />
+    <meta name="og:site_name" content="HALOCHNL">
+
+    <meta name="twitter:site" content="@HALOCHNL">
+
+    <meta name="theme-color" content="#ff3cac" />
+
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100dvh;
+            font-family: "Fredoka", sans-serif;
+            color: white;
+            background:
+                radial-gradient(circle at top left, #ff7ad9 0%, transparent 30%),
+                radial-gradient(circle at bottom right, #7d5cff 0%, transparent 30%),
+                linear-gradient(135deg, #1a0033 0%, #32004f 35%, #001f4d 100%);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                url("https://www.transparenttextures.com/patterns/stardust.png");
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            backdrop-filter: blur(18px);
+            background: linear-gradient(90deg, #ff3caccc, #784bffcc);
+            border-bottom: 3px solid #ffffff33;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+        }
+
+        .menubutton {
+            width: 52px;
+            height: 52px;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            color: white;
+            background: linear-gradient(135deg, #ff8bdc, #7f5dff);
+            box-shadow:
+                0 0 18px rgba(255,255,255,0.35),
+                inset 0 0 8px rgba(255,255,255,0.3);
+            transition: 0.2s ease;
+        }
+
+        .menubutton:hover {
+            transform: scale(1.08) rotate(-4deg);
+        }
+
+        #channel-title-text {
+            margin: 0;
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow:
+                0 0 10px rgba(255,255,255,0.6),
+                0 0 20px rgba(255,60,172,0.8);
+        }
+
+        .main {
+            width: min(1100px, 100%);
+            margin: auto;
+            padding: 22px;
+        }
+
+        .player {
+            padding: 14px;
+            border-radius: 32px;
+            background:
+                linear-gradient(145deg,
+                rgba(255,255,255,0.18),
+                rgba(255,255,255,0.05));
+            backdrop-filter: blur(16px);
+            border: 3px solid rgba(255,255,255,0.2);
+            box-shadow:
+                0 0 30px rgba(255,60,172,0.3),
+                0 0 50px rgba(125,92,255,0.25);
+        }
+
+        .video-js {
+            border-radius: 22px;
+            overflow: hidden;
+        }
+
+        .vjs-big-play-button {
+            border: none !important;
+            border-radius: 999px !important;
+            background: linear-gradient(135deg, #ff3cac, #7d5cff) !important;
+            box-shadow: 0 0 25px rgba(255,60,172,0.7) !important;
+        }
+
+        .vjs-control-bar {
+            background: rgba(20, 10, 45, 0.9) !important;
+        }
+
+        .news-wrap {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .news-label {
+            flex-shrink: 0;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background:
+                linear-gradient(135deg, #ffe14d, #ff8a00);
+            color: #2b003f;
+            box-shadow:
+                0 0 18px rgba(255,225,77,0.6),
+                inset 0 0 10px rgba(255,255,255,0.45);
+        }
+
+        .news-crawl {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 54px;
+            border-radius: 20px;
+            border: 3px solid rgba(255,255,255,0.2);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,60,172,0.25),
+                    rgba(125,92,255,0.25)
+                );
+            backdrop-filter: blur(12px);
+            box-shadow:
+                0 0 22px rgba(255,60,172,0.25),
+                0 0 30px rgba(125,92,255,0.18);
+        }
+
+        .news-track {
+            position: absolute;
+            white-space: nowrap;
+            line-height: 54px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: white;
+            text-shadow:
+                0 0 8px rgba(255,255,255,0.6),
+                0 0 18px rgba(255,60,172,0.8);
+            padding-left: 100%;
+            animation: crawl 18s linear infinite;
+        }
+
+        @keyframes crawl {
+            from {
+                transform: translateX(0%);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .info {
+            margin-top: 24px;
+            padding: 24px;
+            border-radius: 30px;
+            background:
+                linear-gradient(145deg,
+                rgba(255,255,255,0.14),
+                rgba(255,255,255,0.05));
+            backdrop-filter: blur(18px);
+            border: 3px solid rgba(255,255,255,0.18);
+            box-shadow:
+                0 0 30px rgba(125,92,255,0.22),
+                0 0 20px rgba(255,60,172,0.18);
+            position: relative;
+        }
+
+        #about-title {
+            margin-top: 0;
+            font-size: 2rem;
+            color: #fff;
+            text-shadow:
+                0 0 12px rgba(255,255,255,0.6),
+                0 0 18px rgba(255,60,172,0.7);
+        }
+
+        #about-description {
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: #f2eaff;
+        }
+
+        .info::before {
+            content: "★";
+            position: absolute;
+            font-size: 90px;
+            opacity: 0.08;
+            right: 24px;
+            top: 10px;
+            transform: rotate(15deg);
+        }
+
+        @media (max-width: 700px) {
+            #channel-title-text {
+                font-size: 1.2rem;
+            }
+
+            .main {
+                padding: 12px;
+            }
+
+            .player,
+            .info {
+                border-radius: 22px;
+            }
+
+            .news-wrap {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .news-label {
+                text-align: center;
+            }
+
+            .news-crawl {
+                height: 48px;
+            }
+
+            .news-track {
+                line-height: 48px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <a href="./index">
+            <button class="menubutton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18 6 6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </a>
+
+        <p id="channel-title-text">{{ page.abtitle }}</p>
+    </div>
+
+    <div class="main">
+
+        <div class="player">
+            <video 
+                id="my-video"
+                class="video-js vjs-fluid"
+                playsinline
+                loop
+                controls
+                preload="auto"
+                poster="{{ page.poster }}"
+                data-setup="{}"
+            >
+                <source src="{{ page.m3u8 }}" type="application/x-mpegURL">
+                <source src="{{ page.offline }}" type="application/x-mpegURL">
+
+                <p class="vjs-no-js">
+                    To view this video please enable JavaScript and use a modern browser.
+                </p>
+            </video>
+        </div>
+
+        <div class="news-wrap">
+            <div class="news-label">NEWS FLASH</div>
+
+            <div class="news-crawl">
+                <div class="news-track" id="news-track">
+                    LOADING NEWS...
+                </div>
+            </div>
+        </div>
+
+        <div class="info">
+            <h1 id="about-title">About {{ page.abtitle }}</h1>
+
+            <div id="about-description">
+                <p>
+                    {{ page.desc }}<br><br>
+
+                    This page was last updated on 
+                    {{ site.time | date: "%a, %d %b %Y at %H:%M." }}
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+
+    <script>
+        const player = videojs('my-video');
+
+        player.ready(function () {
+            console.log("Video.js is ready");
+        });
+
+        player.on('error', function () {
+            console.error("Video error:", player.error());
+        });
+
+        async function loadNews() {
+            try {
+                const response = await fetch("{{ page.newsurl }}t=" + Date.now());
+
+                if (!response.ok) {
+                    throw new Error("Failed to load news");
+                }
+
+                const text = await response.text();
+
+                const cleaned = text.trim();
+
+                document.getElementById("news-track").textContent =
+                    cleaned || "WELCOME TO HALOCHNL ★ NO NEWS AVAILABLE ★";
+            } catch (err) {
+                document.getElementById("news-track").textContent =
+                    "WELCOME TO HALOCHNL ★ NEWS FAILED TO LOAD ★";
+            }
+        }
+
+        loadNews();
+    </script>
+
+</body>
+</html>
