@@ -121,6 +121,12 @@ nav: true
         transform: translateY(-100px) rotate(360deg);
       }
     }
+
+.status {padding: 6px;margin-top: 6px;margin-bottom: 6px;text-align: center;font-size: 13px;}
+
+.working .status {background-color: #cfeeb2}
+
+.outage .status {background-color: #ffaeae;}
   </style>
 </head>
 
@@ -139,7 +145,8 @@ nav: true
     <div class="updated">
       Last Updated on {{ site.time | date: "%Y-%m-%d %H:%M:%S" }}
     </div>
-
+<hr>
+<center><div class="status">Webchnl Channels are unavailable due to an ongoing DMCA report from Warner Bros Discovery.</div></center>
     <ul>
       {% for page in site.html_pages %}
         {% unless page.url == "/" %}
