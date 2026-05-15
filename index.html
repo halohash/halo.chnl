@@ -150,6 +150,7 @@ nav: true
     <ul>
       {% for page in site.html_pages %}
         {% unless page.url == "/" %}
+         {% unless page.url == "live_browse" %}
           <li>
             <a href=".{{ page.url }}">
               {% if page.chnlicon %}
@@ -158,6 +159,7 @@ nav: true
               {{ page.abtitle | default: page.url }}
             </a>
           </li>
+         {% endunless %}
         {% endunless %}
       {% endfor %}
     </ul>
