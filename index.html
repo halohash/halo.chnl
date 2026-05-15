@@ -150,7 +150,7 @@ nav: true
     <ul>
       {% for page in site.html_pages %}
         {% unless page.url == "/" %}
-         {% unless page.url == "live_browse" %}
+         {% unless page.url == "live_browse.html" %}
           <li>
             <a href=".{{ page.url }}">
               {% if page.chnlicon %}
