@@ -148,20 +148,20 @@ nav: true
 <hr>
 <center><div class="status">Webchnl Channels are unavailable due to an ongoing DMCA report from Warner Bros Discovery.</div></center>
     <ul>
-      {% for page in site.html_pages %}
-        {% unless page.url == "/" %}
-         {% unless page.url == "live_browse.html" %}
-          <li>
-            <a href=".{{ page.url }}">
-              {% if page.chnlicon %}
-                <img src="{{ page.chnlicon }}" alt="icon">
-              {% endif %}
-              {{ page.abtitle | default: page.url }}
-            </a>
-          </li>
-         {% endunless %}
-        {% endunless %}
-      {% endfor %}
+<ul>
+  {% for page in site.html_pages %}
+    {% unless page.url == "/" or page.experiment == true %}
+      <li>
+        <a href=".{{ page.url }}">
+          {% if page.chnlicon %}
+            <img src="{{ page.chnlicon }}" alt="icon">
+          {% endif %}
+          {{ page.abtitle | default: page.url }}
+        </a>
+      </li>
+    {% endunless %}
+  {% endfor %}
+</ul>
     </ul>
   </div>
 </body>
