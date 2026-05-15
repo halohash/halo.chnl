@@ -251,7 +251,7 @@ experiment: true
         <ul class="yt-uix-shelfslider-list">
 
           {% for page in site.html_pages %}
-  {% unless page.url == "/" or page.name == "live_browse.html" %}
+  {% unless page.url == "/" or page.experiment == true %}
 
     <li class="channels-content-item yt-shelf-grid-item yt-uix-shelfslider-item">
       <div class="yt-lockup clearfix yt-lockup-video yt-lockup-grid vve-check context-data-item">
