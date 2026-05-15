@@ -9,7 +9,7 @@ var yt = yt || {};yt.timing = yt.timing || {};yt.timing.tick = function(label, o
 
 
   
-  <title>Apple - YouTube</title>
+  <title>{{ page.abtitle }} - YouTube</title>
     
   <link rel="search" type="application/opensearchdescription+xml" href="https://www.youtube.com/opensearch?locale=en_US" title="YouTube Video Search">
 
@@ -273,7 +273,7 @@ Clear
               <div class="channels-featured-video channel-module yt-uix-c3-module-container has-visible-edge">
       <div class="module-view featured-video-view-module">
             <div class="channels-video-player ">
-                <video width="640px" height="390px" id="shay" controls></video>
+                <video width="640px" height="390px" id="shay" controls src="{{ page.m3u8 }}"></video>
   </div>
     <div class="channels-featured-video-details yt-tile-visible clearfix">
       <h3 class="title">
@@ -1064,10 +1064,10 @@ if (window.yt.timing) {yt.timing.tick("js_head");}    </script>
         player.on('error', function () {
             console.error("Video error:", player.error());
         });
-
-        loadNews();
     </script>
-
+<script src="
+https://cdn.jsdelivr.net/npm/hls.js@1.6.16/dist/hls.min.js
+"></script>
 
   
 
