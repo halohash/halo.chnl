@@ -47,7 +47,7 @@ var yt = yt || {};yt.timing = yt.timing || {};yt.timing.tick = function(label, o
 
   <style>
     #branded-page-body-container {
-      background-color: #CCCCCC;
+      background-color: {{ page.bgcolor }};
       background-image: url({{ page.bg }});
       background-repeat: no-repeat;
       background-position: center top;
@@ -273,7 +273,7 @@ Clear
               <div class="channels-featured-video channel-module yt-uix-c3-module-container has-visible-edge">
       <div class="module-view featured-video-view-module">
             <div class="channels-video-player ">
-                <video width="640px" height="390px" id="shay" controls src="{{ page.m3u8 }}"></video>
+                <video width="640px" height="390px" id="shay" class="video-js vjs-fluid vjs-matrix" controls src="{{ page.m3u8 }}"></video>
   </div>
     <div class="channels-featured-video-details yt-tile-visible clearfix">
       <h3 class="title">
